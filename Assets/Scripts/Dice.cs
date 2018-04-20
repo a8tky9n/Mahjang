@@ -39,8 +39,8 @@ public class Dice : BaseBehaviour
     void ShakeMove()
     {
         rb.maxAngularVelocity = 10000;
-        rb.AddForce(Vector3.up * 3, ForceMode.Impulse);
-        rb.AddTorque(new Vector3(Random.Range(1f, 10f), Random.Range(1f, 10f), Random.Range(1f, 10f)) * 0.1f, ForceMode.Impulse);
+        //rb.AddForce(Vector3.up * 3, ForceMode.Impulse);
+        rb.AddTorque(new Vector3(Random.Range(1f, 10f), Random.Range(1f, 10f), Random.Range(1f, 10f)) * 0.5f, ForceMode.Impulse);
     }
     // サイコロをとめるインターフェース
     public void StopShake()
