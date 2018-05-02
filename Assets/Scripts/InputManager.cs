@@ -6,6 +6,14 @@ using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class TouchEvent : UnityEvent<string> { }
+    [System.Serializable]
+    public class ReleaseEvent : UnityEvent { }
+    [SerializeField]
+    private TouchEvent OnTouched = new TouchEvent();
+    [SerializeField]
+    private ReleaseEvent OnRelesed = new ReleaseEvent();
     // Update is called once per frame
     [SerializeField]
     Text text;
@@ -15,11 +23,10 @@ public class InputManager : MonoBehaviour
         {
             Debug.Log("タップ");
         }
-        //if (OnMouseDown())
-        //{
-        //    Debug.Log("hoge");
-        //}
-
+        else
+        {
+            OnRelesed.Invoke();
+        }
     }
     bool OnTouchDown()
     {
@@ -33,36 +40,18 @@ public class InputManager : MonoBehaviour
                 RaycastHit hit = new RaycastHit();
                 if (Physics.Raycast(ray, out hit))
                 {
+                    OnTouched.Invoke(hit.collider.gameObject.name);
                     text.text = hit.collider.gameObject.name;
-                    if (hit.collider.gameObject.name.Contains("Player"))
-                    {
-                        hit.collider.gameObject.GetComponent<WindButton>().ButtonDown();
-                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
 
             }
-            return true;
         }
         text.text = "";
-        return false;
-    }
-    bool OnMouseDown()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            text.text = Input.mousePosition.ToString();
-            RaycastHit hit = new RaycastHit();
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.gameObject.name.Contains("Player"))
-                {
-                    hit.collider.gameObject.GetComponent<WindButton>().ButtonDown();
-                }
-                return true;
-            }
-
-        }
         return false;
     }
 }

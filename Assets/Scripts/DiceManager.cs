@@ -10,10 +10,6 @@ public class DiceManager : MonoBehaviour {
     public float mult;
     bool isShaking;
     // Use this for initialization
-    void Start()
-    {
-
-    }
     
     void Update()
     {
@@ -32,5 +28,28 @@ public class DiceManager : MonoBehaviour {
                 dice[i].GetComponent<Dice>().StopShake();
             }
         }
+    }
+    public void DiceShake()
+    {
+        if (!isShaking)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                dice[i].GetComponent<Dice>().Shake();
+                isShaking = true;
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
+    public void StopShake()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            dice[i].GetComponent<Dice>().StopShake();
+        }
+        isShaking = false;
     }
 }
